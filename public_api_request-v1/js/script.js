@@ -1,5 +1,7 @@
 const userUrl = 'https://randomuser.me/api/?results=12';
 const galleryDiv = document.getElementById('gallery');
+let galleryData;
+
 
 async function getJSON(url) {
     try {
@@ -9,10 +11,11 @@ async function getJSON(url) {
         throw error;
     }
 }
+  
 
 
 function galleryHTML(data) {
-    data.map(person => {
+    data.results.map(person => {
         const div = document.createElement('div');
         galleryDiv.appendChild(div);
         div.className = 'card';
@@ -27,10 +30,22 @@ function galleryHTML(data) {
         </div>
         `;
     });
+    return data;
 }
 
 
 getJSON(userUrl)
-    .then(data => data.results)
     .then(galleryHTML)
+    .then(data => galleryData = data.results)
     .catch(err => console.error(err))
+
+
+
+
+
+
+// galleryDiv.addEventListener('click', (event) => console.log(event.target.index));
+
+
+
+
